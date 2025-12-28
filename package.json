@@ -17,8 +17,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AppThreat/atom.git"
+    "url": "git+https://github.com/AppThreat/atom-common.git"
   },
+  "bugs": {
+    "url": "https://github.com/AppThreat/atom-parsetools/issues"
+  },
+  "homepage": "https://github.com/AppThreat/atom-common#readme",
   "files": [
     "*.js",
     "*.mjs",
