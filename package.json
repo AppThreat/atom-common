@@ -4,6 +4,10 @@
   "description": "Common library for the @appthreat/atom project.",
   "main": "index.js",
   "type": "module",
+  "scripts": {
+    "pretty": "prettier --write *.js *.mjs --trailing-comma=none",
+    "lint": "eslint *.mjs *.js"
+  },
   "devDependencies": {},
   "keywords": [
     "atom",

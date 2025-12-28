@@ -1,0 +1,31 @@
+name: Node.js CI
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: '25.x'
+    - name: build
+      run: |
+        npm ci
+        npm publish --dry-run --@appthreat:registry='https://registry.npmjs.org'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPMJS_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: publish
+      run: |
+        npm config set //registry.npmjs.org/:_authToken=$NPMJS_AUTH_TOKEN
+        echo "appthreat:registry=https://registry.npmjs.org" > ~/.npmrc
+        npm publish --provenance --access=public --@appthreat:registry='https://registry.npmjs.org'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPMJS_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      if: startsWith(github.ref, 'refs/tags/')
